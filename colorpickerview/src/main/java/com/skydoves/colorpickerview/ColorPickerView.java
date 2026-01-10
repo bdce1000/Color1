@@ -104,6 +104,7 @@ public class ColorPickerView extends FrameLayout implements LifecycleObserver {
   private boolean VISIBLE_FLAG = false;
 
   private String preferenceName;
+  private boolean selectorPointValidation = true;
   private final ColorPickerPreferenceManager preferenceManager =
     ColorPickerPreferenceManager.getInstance(getContext());
 
@@ -172,6 +173,10 @@ public class ColorPickerView extends FrameLayout implements LifecycleObserver {
       }
       if (a.hasValue(R.styleable.ColorPickerView_initialColor)) {
         setInitialColor(a.getColor(R.styleable.ColorPickerView_initialColor, Color.WHITE));
+      }
+      if (a.hasValue(R.styleable.ColorPickerView_selectorPointValidation)) {
+        this.selectorPointValidation =
+          a.getBoolean(R.styleable.ColorPickerView_selectorPointValidation, selectorPointValidation);
       }
     } finally {
       a.recycle();
@@ -278,6 +283,7 @@ public class ColorPickerView extends FrameLayout implements LifecycleObserver {
     if (builder.preferenceName != null) setPreferenceName(builder.preferenceName);
     if (builder.initialColor != 0) setInitialColor(builder.initialColor);
     if (builder.lifecycleOwner != null) setLifecycleOwner(builder.lifecycleOwner);
+    this.selectorPointValidation = builder.selectorPointValidation;
   }
 
   @SuppressLint("ClickableViewAccessibility")
@@ -930,6 +936,33 @@ public class ColorPickerView extends FrameLayout implements LifecycleObserver {
   }
 
   /**
+   * Returns whether selector point validation (approximation) is enabled.
+   *
+   * <p>When enabled, the selector point is approximated to find the nearest valid color,
+   * which handles edge cases where users touch outside the image matrix.
+   * When disabled, exact coordinates are used without approximation.
+   *
+   * @return true if selector point validation is enabled, false otherwise.
+   */
+  public boolean isSelectorPointValidationEnabled() {
+    return selectorPointValidation;
+  }
+
+  /**
+   * Sets whether selector point validation (approximation) is enabled.
+   *
+   * <p>When enabled (default), the selector point is approximated to find the nearest valid color,
+   * which handles edge cases where users touch outside the image matrix.
+   * When disabled, exact coordinates are used without approximation, which is useful
+   * when precise point restoration is needed (e.g., saving and restoring selector positions).
+   *
+   * @param enabled true to enable validation, false to disable.
+   */
+  public void setSelectorPointValidation(boolean enabled) {
+    this.selectorPointValidation = enabled;
+  }
+
+  /**
    * sets the {@link LifecycleOwner}.
    *
    * @param lifecycleOwner {@link LifecycleOwner}.
@@ -990,6 +1023,7 @@ public class ColorPickerView extends FrameLayout implements LifecycleObserver {
     private int height = LayoutParams.MATCH_PARENT;
     private String preferenceName;
     private LifecycleOwner lifecycleOwner;
+    private boolean selectorPointValidation = true;
 
     public Builder(Context context) {
       this.context = context;
@@ -1082,6 +1116,11 @@ public class ColorPickerView extends FrameLayout implements LifecycleObserver {
 
     public Builder setLifecycleOwner(LifecycleOwner lifecycleOwner) {
       this.lifecycleOwner = lifecycleOwner;
+      return this;
+    }
+
+    public Builder setSelectorPointValidation(boolean enabled) {
+      this.selectorPointValidation = enabled;
       return this;
     }
 

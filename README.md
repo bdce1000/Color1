@@ -31,19 +31,7 @@ Add the dependency below to your module's `build.gradle` file:
 
 ```gradle
 dependencies {
-    implementation "com.github.skydoves:colorpickerview:2.3.0"
-}
-```
-
-## SNAPSHOT 
-[![ColorPickerView](https://img.shields.io/static/v1?label=snapshot&message=ColorPickerView&logo=apache%20maven&color=C71A36)](https://oss.sonatype.org/content/repositories/snapshots/com/github/skydoves/colorpickerview/) <br>
-Snapshots of the current development version of ColorPickerView are available, which track [the latest versions](https://oss.sonatype.org/content/repositories/snapshots/com/github/skydoves/colorpickerview/).
-
-```Gradle
-repositories {
-   maven {
-     url 'https://oss.sonatype.org/content/repositories/snapshots/'
-   }
+    implementation("com.github.skydoves:colorpickerview:2.3.0")
 }
 ```
 
