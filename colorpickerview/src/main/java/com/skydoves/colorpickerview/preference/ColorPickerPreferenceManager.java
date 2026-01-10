@@ -97,6 +97,9 @@ public class ColorPickerPreferenceManager {
    * @return {@link ColorPickerPreferenceManager}.
    */
   public ColorPickerPreferenceManager setSelectorPosition(String name, Point position) {
+    if (position == null) {
+      return colorPickerPreferenceManager;
+    }
     sharedPreferences.edit().putInt(getSelectorXName(name), position.x).apply();
     sharedPreferences.edit().putInt(getSelectorYName(name), position.y).apply();
     return colorPickerPreferenceManager;
@@ -110,9 +113,11 @@ public class ColorPickerPreferenceManager {
    * @return the saved selector position.
    */
   public Point getSelectorPosition(String name, Point defaultPoint) {
+    int defaultX = defaultPoint != null ? defaultPoint.x : 0;
+    int defaultY = defaultPoint != null ? defaultPoint.y : 0;
     return new Point(
-        sharedPreferences.getInt(getSelectorXName(name), defaultPoint.x),
-        sharedPreferences.getInt(getSelectorYName(name), defaultPoint.y));
+        sharedPreferences.getInt(getSelectorXName(name), defaultX),
+        sharedPreferences.getInt(getSelectorYName(name), defaultY));
   }
 
   /**
