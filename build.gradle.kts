@@ -21,7 +21,6 @@ plugins {
   alias(libs.plugins.nexus.plugin)
   alias(libs.plugins.spotless)
   alias(libs.plugins.dokka)
-  alias(libs.plugins.kotlin.binary.compatibility)
 }
 
 subprojects {

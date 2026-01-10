@@ -29,7 +29,7 @@ class BaselineProfileGenerator {
 
   @Test
   fun startup() = baselineProfileRule.collect(
-    packageName = packageName,
+    packageName = PACKAGE_NAME,
     stableIterations = 2,
     maxIterations = 8,
   ) {
@@ -42,4 +42,4 @@ class BaselineProfileGenerator {
   }
 }
 
-private const val packageName = "com.skydoves.colorpickerviewdemo"
+private const val PACKAGE_NAME = "com.skydoves.colorpickerviewdemo"

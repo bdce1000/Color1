@@ -17,9 +17,9 @@
 package com.skydoves.colorpicker
 
 object Configuration {
-  const val compileSdk = 34
-  const val targetSdk = 34
-  const val minSdk = 17
+  const val compileSdk = 35
+  const val targetSdk = 35
+  const val minSdk = 21
   const val minSdkBenchmark = 23
   const val majorVersion = 2
   const val minorVersion = 3

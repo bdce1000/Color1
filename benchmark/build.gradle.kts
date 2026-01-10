@@ -12,12 +12,8 @@ android {
   compileSdk = Configuration.compileSdk
 
   compileOptions {
-    sourceCompatibility = JavaVersion.VERSION_11
-    targetCompatibility = JavaVersion.VERSION_11
-  }
-
-  kotlinOptions {
-    jvmTarget = libs.versions.jvmTarget.get()
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
   }
 
   defaultConfig {
@@ -48,6 +44,12 @@ baselineProfile {
   // This enables using connected devices to generate profiles. The default is true.
   // When using connected devices, they must be rooted or API 33 and higher.
   useConnectedDevices = false
+}
+
+kotlin {
+  compilerOptions {
+    jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17)
+  }
 }
 
 dependencies {
