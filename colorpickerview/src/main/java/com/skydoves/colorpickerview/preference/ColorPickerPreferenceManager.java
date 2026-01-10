@@ -35,11 +35,16 @@ public class ColorPickerPreferenceManager {
   protected static final String AlphaSlider = "_SLIDER_ALPHA";
   protected static final String BrightnessSlider = "_SLIDER_BRIGHTNESS";
   private static ColorPickerPreferenceManager colorPickerPreferenceManager;
-  private final SharedPreferences sharedPreferences;
+  private SharedPreferences sharedPreferences;
 
   private ColorPickerPreferenceManager(Context context) {
     sharedPreferences =
         context.getSharedPreferences(context.getPackageName(), Context.MODE_PRIVATE);
+  }
+
+  private ColorPickerPreferenceManager(Context context, String preferenceName) {
+    sharedPreferences =
+        context.getSharedPreferences(preferenceName, Context.MODE_PRIVATE);
   }
 
   /**
@@ -53,6 +58,47 @@ public class ColorPickerPreferenceManager {
       colorPickerPreferenceManager = new ColorPickerPreferenceManager(context);
     }
     return colorPickerPreferenceManager;
+  }
+
+  /**
+   * gets an instance of the {@link ColorPickerPreferenceManager} with a custom preference name.
+   *
+   * <p>This allows using a custom SharedPreferences file name instead of the default
+   * package name, which is useful for compatibility with other preference systems.
+   *
+   * @param context context.
+   * @param preferenceName custom SharedPreferences file name.
+   * @return {@link ColorPickerPreferenceManager}.
+   */
+  public static ColorPickerPreferenceManager getInstance(Context context, String preferenceName) {
+    if (colorPickerPreferenceManager == null) {
+      colorPickerPreferenceManager = new ColorPickerPreferenceManager(context, preferenceName);
+    }
+    return colorPickerPreferenceManager;
+  }
+
+  /**
+   * Sets a custom SharedPreferences file name.
+   *
+   * <p>This allows changing the SharedPreferences file after initialization,
+   * useful for compatibility with other preference systems like ColorPickerPreference.
+   *
+   * @param context context.
+   * @param preferenceName custom SharedPreferences file name.
+   * @return {@link ColorPickerPreferenceManager}.
+   */
+  public ColorPickerPreferenceManager setSharedPreferenceName(Context context, String preferenceName) {
+    this.sharedPreferences = context.getSharedPreferences(preferenceName, Context.MODE_PRIVATE);
+    return this;
+  }
+
+  /**
+   * Gets the underlying SharedPreferences instance.
+   *
+   * @return {@link SharedPreferences}.
+   */
+  public SharedPreferences getSharedPreferences() {
+    return sharedPreferences;
   }
 
   /**
