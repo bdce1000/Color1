@@ -57,6 +57,7 @@ abstract class AbstractSlider extends FrameLayout {
   protected int color = Color.WHITE;
   protected ImageView selector;
   protected String preferenceName;
+  protected boolean selectorPositionInitialized = false;
 
   public AbstractSlider(Context context) {
     super(context);
@@ -206,6 +207,7 @@ abstract class AbstractSlider extends FrameLayout {
     float x = (getWidth() * selectorPosition) - getSelectorSize() - getBorderHalfSize();
     selectedX = (int) getBoundaryX(x);
     selector.setX(selectedX);
+    selectorPositionInitialized = true;
   }
 
   public void setSelectorByHalfSelectorPosition(
@@ -214,6 +216,7 @@ abstract class AbstractSlider extends FrameLayout {
     float x = (getWidth() * selectorPosition) - (getSelectorSize() * 0.5f) - getBorderHalfSize();
     selectedX = (int) getBoundaryX(x);
     selector.setX(selectedX);
+    selectorPositionInitialized = true;
   }
 
   private float getBoundaryX(float x) {

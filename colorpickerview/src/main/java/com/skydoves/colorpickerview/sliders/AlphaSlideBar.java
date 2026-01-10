@@ -101,6 +101,12 @@ public class AlphaSlideBar extends AbstractSlider {
 
   @Override
   public void onInflateFinished() {
+    // Skip default positioning if the selector position was already set
+    // (e.g., via setInitialColor before layout completed)
+    if (selectorPositionInitialized) {
+      return;
+    }
+
     int defaultPosition = getWidth() - selector.getWidth();
     if (getPreferenceName() != null) {
       updateSelectorX(
