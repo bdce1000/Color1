@@ -105,6 +105,7 @@ public class ColorPickerView extends FrameLayout implements LifecycleObserver {
 
   private String preferenceName;
   private boolean selectorPointValidation = true;
+  private boolean resetBrightnessOnLowSaturation = true;
   private final ColorPickerPreferenceManager preferenceManager =
     ColorPickerPreferenceManager.getInstance(getContext());
 
@@ -177,6 +178,10 @@ public class ColorPickerView extends FrameLayout implements LifecycleObserver {
       if (a.hasValue(R.styleable.ColorPickerView_selectorPointValidation)) {
         this.selectorPointValidation =
           a.getBoolean(R.styleable.ColorPickerView_selectorPointValidation, selectorPointValidation);
+      }
+      if (a.hasValue(R.styleable.ColorPickerView_resetBrightnessOnLowSaturation)) {
+        this.resetBrightnessOnLowSaturation =
+          a.getBoolean(R.styleable.ColorPickerView_resetBrightnessOnLowSaturation, resetBrightnessOnLowSaturation);
       }
     } finally {
       a.recycle();
@@ -284,6 +289,7 @@ public class ColorPickerView extends FrameLayout implements LifecycleObserver {
     if (builder.initialColor != 0) setInitialColor(builder.initialColor);
     if (builder.lifecycleOwner != null) setLifecycleOwner(builder.lifecycleOwner);
     this.selectorPointValidation = builder.selectorPointValidation;
+    this.resetBrightnessOnLowSaturation = builder.resetBrightnessOnLowSaturation;
   }
 
   @SuppressLint("ClickableViewAccessibility")
@@ -321,6 +327,16 @@ public class ColorPickerView extends FrameLayout implements LifecycleObserver {
     this.selectedColor = pixelColor;
     this.selectedPoint = PointMapper.getColorPoint(this, new Point(snapPoint.x, snapPoint.y));
     setCoordinate(snapPoint.x, snapPoint.y);
+
+    // When selecting a color with very low saturation on an HSV palette,
+    // automatically set brightness slider to maximum to allow selecting white.
+    if (resetBrightnessOnLowSaturation && isHuePalette() && brightnessSlider != null) {
+      float[] hsv = new float[3];
+      Color.colorToHSV(pixelColor, hsv);
+      if (hsv[1] < 0.05f) {
+        brightnessSlider.setSelectorByHalfSelectorPosition(1.0f);
+      }
+    }
 
     if (actionMode == ActionMode.LAST) {
       notifyToFlagView(this.selectedPoint);
@@ -813,9 +829,39 @@ public class ColorPickerView extends FrameLayout implements LifecycleObserver {
 
   /**
    * selects the center of the palette manually.
+   * For HSV palettes, this also resets the brightness slider to maximum
+   * to ensure the selected color is white.
    */
   public void selectCenter() {
     setSelectorPoint(getWidth() / 2, getMeasuredHeight() / 2);
+    if (isHuePalette() && brightnessSlider != null) {
+      brightnessSlider.setSelectorByHalfSelectorPosition(1.0f);
+      fireColorListener(getColor(), false);
+    }
+  }
+
+  /**
+   * Selects white color on the HSV palette.
+   *
+   * <p>This moves the selector to the center of the palette (saturation = 0),
+   * sets the brightness slider to maximum (value = 1), and optionally sets
+   * the alpha slider to maximum (alpha = 255).
+   *
+   * <p>This method only works with HSV palettes. For custom palette drawables,
+   * use {@link #setSelectorPoint(int, int)} instead.
+   */
+  public void selectWhite() {
+    if (!isHuePalette()) {
+      return;
+    }
+    setSelectorPoint(getWidth() / 2, getMeasuredHeight() / 2);
+    if (brightnessSlider != null) {
+      brightnessSlider.setSelectorByHalfSelectorPosition(1.0f);
+    }
+    if (alphaSlideBar != null) {
+      alphaSlideBar.setSelectorByHalfSelectorPosition(1.0f);
+    }
+    fireColorListener(getColor(), false);
   }
 
   /**
@@ -963,6 +1009,33 @@ public class ColorPickerView extends FrameLayout implements LifecycleObserver {
   }
 
   /**
+   * Returns whether brightness slider auto-reset on low saturation is enabled.
+   *
+   * <p>When enabled, the brightness slider automatically resets to maximum when selecting
+   * colors with very low saturation (near the center of the HSV palette), allowing easy
+   * selection of white.
+   *
+   * @return true if auto-reset is enabled, false otherwise.
+   */
+  public boolean isResetBrightnessOnLowSaturationEnabled() {
+    return resetBrightnessOnLowSaturation;
+  }
+
+  /**
+   * Sets whether brightness slider auto-reset on low saturation is enabled.
+   *
+   * <p>When enabled (default), the brightness slider automatically resets to maximum when
+   * selecting colors with very low saturation (near the center of the HSV palette), allowing
+   * easy selection of white (#FFFFFF).
+   * When disabled, the brightness slider position is preserved regardless of the selected color.
+   *
+   * @param enabled true to enable auto-reset, false to disable.
+   */
+  public void setResetBrightnessOnLowSaturation(boolean enabled) {
+    this.resetBrightnessOnLowSaturation = enabled;
+  }
+
+  /**
    * sets the {@link LifecycleOwner}.
    *
    * @param lifecycleOwner {@link LifecycleOwner}.
@@ -1024,6 +1097,7 @@ public class ColorPickerView extends FrameLayout implements LifecycleObserver {
     private String preferenceName;
     private LifecycleOwner lifecycleOwner;
     private boolean selectorPointValidation = true;
+    private boolean resetBrightnessOnLowSaturation = true;
 
     public Builder(Context context) {
       this.context = context;
@@ -1121,6 +1195,11 @@ public class ColorPickerView extends FrameLayout implements LifecycleObserver {
 
     public Builder setSelectorPointValidation(boolean enabled) {
       this.selectorPointValidation = enabled;
+      return this;
+    }
+
+    public Builder setResetBrightnessOnLowSaturation(boolean enabled) {
+      this.resetBrightnessOnLowSaturation = enabled;
       return this;
     }
 
