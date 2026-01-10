@@ -34,7 +34,10 @@ class PointMapper {
     if (getDistance(start, end) <= 3) return end;
     Point center = getCenterPoint(start, end);
     int color = colorPickerView.getColorFromBitmap(center.x, center.y);
-    if (color == Color.TRANSPARENT) {
+    // Check alpha channel to determine if pixel is transparent.
+    // This allows selecting black (0xFF000000) which was previously
+    // confused with transparent (0x00000000) when using == Color.TRANSPARENT.
+    if (Color.alpha(color) == 0) {
       return approximatedPoint(colorPickerView, center, end);
     } else {
       return approximatedPoint(colorPickerView, start, center);
