@@ -43,6 +43,8 @@
     </attr>
     <!-- enables selector point validation (approximation to find valid color). when disabled, uses exact coordinates without approximation. -->
     <attr name="selectorPointValidation" format="boolean" />
+    <!-- when enabled, automatically resets brightness slider to maximum when selecting colors with low saturation (near center of HSV palette), allowing easy selection of white. -->
+    <attr name="resetBrightnessOnLowSaturation" format="boolean" />
   </declare-styleable>
   <declare-styleable name="AlphaSlideBar">
     <!-- sets a customized selector drawable. -->
