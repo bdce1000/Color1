@@ -22,7 +22,7 @@
     <attr name="selector" format="integer" />
     <!-- sets a width/height square size of the selector. -->
     <attr name="selector_size" format="dimension" />
-    <!-- sets an alpha of thr selector. -->
+    <!-- sets an alpha of the selector. -->
     <attr name="selector_alpha" format="float" />
     <!-- sets an alpha of the flag. -->
     <attr name="flag_alpha" format="float" />
@@ -41,6 +41,8 @@
       <!-- trigger the listener only the last color when user release tapping. -->
       <enum name="last" value="1" />
     </attr>
+    <!-- enables selector point validation (approximation to find valid color). when disabled, uses exact coordinates without approximation. -->
+    <attr name="selectorPointValidation" format="boolean" />
   </declare-styleable>
   <declare-styleable name="AlphaSlideBar">
     <!-- sets a customized selector drawable. -->

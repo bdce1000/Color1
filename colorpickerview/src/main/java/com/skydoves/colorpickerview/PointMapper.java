@@ -26,6 +26,7 @@ class PointMapper {
     Point center =
         new Point(colorPickerView.getWidth() / 2, colorPickerView.getMeasuredHeight() / 2);
     if (colorPickerView.isHuePalette()) return getHuePoint(colorPickerView, point);
+    if (!colorPickerView.isSelectorPointValidationEnabled()) return point;
     return approximatedPoint(colorPickerView, point, center);
   }
 
