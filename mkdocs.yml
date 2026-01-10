@@ -1,0 +1,67 @@
+site_name: ColorPickerView
+site_description: 'ColorPickerView enables you to obtain HSV colors, ARGB values, and Hex color codes from image drawables or gallery pictures with a simple tap on Android.'
+site_author: 'Jaewoong (skydoves)'
+site_url: 'https://github.com/skydoves/ColorPickerView'
+edit_uri: 'tree/main/docs/'
+remote_branch: gh-pages
+
+docs_dir: docs
+
+# Navigation
+nav:
+  - 'Overview': index.md
+  - 'Getting Started': getting-started.md
+  - 'ColorPickerView': colorpickerview.md
+  - 'Sliders':
+    - 'AlphaSlideBar': sliders/alpha-slidebar.md
+    - 'BrightnessSlideBar': sliders/brightness-slidebar.md
+  - 'ColorPickerDialog': color-picker-dialog.md
+  - 'FlagView': flagview.md
+  - 'AlphaTileView': alphatileview.md
+  - 'Preference': preference.md
+  - 'Sponsor': sponsor.md
+
+# Repository
+repo_name: 'ColorPickerView'
+repo_url: 'https://github.com/skydoves/ColorPickerView'
+
+# Configuration
+theme:
+  name: 'material'
+  language: 'en'
+  icon:
+    logo: material/palette
+
+  palette:
+    primary: 'deep purple'
+    accent: 'deep purple'
+    scheme: slate
+
+  font:
+    text: 'Roboto'
+    code: 'JetBrains Mono'
+
+  features:
+    - content.tabs.link
+    - content.code.copy
+    - content.code.annotate
+
+extra:
+  analytics:
+    provider: google
+    property: G-1SBY14Q79E
+
+# Extensions
+markdown_extensions:
+  - admonition
+  - attr_list
+  - codehilite:
+      guess_lang: false
+  - footnotes
+  - toc:
+      permalink: true
+  - pymdownx.betterem
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.details
