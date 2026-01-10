@@ -7,7 +7,7 @@
 <p align="center">
   <a href="https://devlibrary.withgoogle.com/products/android/repos/skydoves-colorpickerview"><img alt="Google" src="https://skydoves.github.io/badges/google-devlib.svg"/></a><br>
   <a href="https://opensource.org/licenses/Apache-2.0"><img alt="License" src="https://img.shields.io/badge/License-Apache%202.0-blue.svg"/></a>
-  <a href="https://android-arsenal.com/api?level=15"><img alt="API" src="https://img.shields.io/badge/API-15%2B-brightgreen.svg?style=flat"/></a>
+  <a href="https://android-arsenal.com/api?level=21"><img alt="API" src="https://img.shields.io/badge/API-21%2B-brightgreen.svg?style=flat"/></a>
   <a href="https://github.com/skydoves/ColorPickerView/actions"><img alt="Build Status" src="https://github.com/skydoves/ColorPickerView/workflows/Android%20CI/badge.svg"/></a>
   <a href="https://androidweekly.net/issues/issue-316"><img alt="Android Weekly" src="https://skydoves.github.io/badges/android-weekly.svg"/></a>
   <a href="https://skydoves.github.io/libraries/colorpickerview/javadoc/"><img alt="Javadoc" src="https://skydoves.github.io/badges/javadoc-colorpicker.svg"/></a>
@@ -69,7 +69,7 @@ __[7. ColorPickerView Methods](https://github.com/skydoves/ColorPickerView#color
 __[8. Other Libraries](https://github.com/skydoves/ColorPickerView#other-libraries)__ <br>
 
 ## Usage
-Add following XML namespace inside your XML layout file.
+Add the following XML namespace inside your XML layout file.
 
 ```gradle
 xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -94,7 +94,7 @@ You can customize the palette image and selector or various options using the be
 app:palette="@drawable/palette" // sets a custom palette image.
 app:selector="@drawable/colorpickerview_wheel" // sets a custom selector image.
 app:selector_size="32dp" // sets a width & height size of the selector.
-app:alpha_selector="0.8" // sets an alpha of thr selector.
+app:alpha_selector="0.8" // sets an alpha of the selector.
 app:alpha_flag="0.8" // sets an alpha of the flag.
 app:actionMode="last" // sets action mode 'always' or 'last'.
 // set an initial position of the selector using a specific color. This attribute will work with only a default HSV palette.
@@ -188,7 +188,7 @@ You can create an instance of `ColorPickerView` using `ColorPickerView.Builder` 
 ```java
 ColorPickerView colorPickerView = new ColorPickerView.Builder(context)
       .setColorListener(colorListener)
-      .setPreferenceName("MyColorPicker");
+      .setPreferenceName("MyColorPicker")
       .setActionMode(ActionMode.LAST)
       .setAlphaSlideBar(alphaSlideBar)
       .setBrightnessSlideBar(brightnessSlideBar)
@@ -222,7 +222,7 @@ colorPickerView.setPreferenceName("MyColorPicker");
 ```
 
 This is how to save the states of `ColorPickerView`.<br>
-The `setLifecycleOwner()` method saves all of the states automatically when the `lifecycleOwner` is destroy.
+The `setLifecycleOwner()` method saves all of the states automatically when the `lifecycleOwner` is destroyed.
 
 ```java
 colorPickerView.setLifecycleOwner(this);
@@ -302,7 +302,7 @@ AlphaSlideBar alphaSlideBar = findViewById(R.id.alphaSlideBar);
 colorPickerView.attachAlphaSlider(alphaSlideBar);
 ```
 
-If you want to implement a vertical style of slides, you can achieve it with the `rotation` attributes.
+If you want to implement a vertical style of sliders, you can achieve it with the `rotation` attributes.
 
 ```gradle
 android:layout_width="280dp" // width must set a specific width size.
@@ -333,7 +333,7 @@ BrightnessSlideBar brightnessSlideBar = findViewById(R.id.brightnessSlide);
 colorPickerView.attachBrightnessSlider(brightnessSlideBar);
 ```
 
-If you want to implement a vertical style of slides, you can achieve it with the `rotation` attributes.
+If you want to implement a vertical style of sliders, you can achieve it with the `rotation` attributes.
 
 ```gradle
 android:layout_width="280dp" // width must set a specific width size.
@@ -459,7 +459,7 @@ colorPickerView.setFlagView(new CustomFlag(this, R.layout.layout_flag));
 ```
 
 ### FlagMode
-`FlagMode` is an option to decides the visibility action of the `FlagView`.
+`FlagMode` is an option that decides the visibility action of the `FlagView`.
 
 ```java
 colorPickerView.setFlagMode(FlagMode.ALWAYS); // showing always by tapping and dragging.
@@ -497,8 +497,8 @@ setInitialColor(@ColorInt int color) | void | changes selector's selected point 
 setInitialColorRes(@ColorRes int resource) | void | changes selector's selected point by a specific color initially using a color resource.
 setActionMode(ActionMode) | void | sets the color listener's trigger action mode.
 setFlagView(FlagView flagView) | void | sets `FlagView` on `ColorPickerView`.
-attachAlphaSlider | void | linking an `AlphaSlideBar` on the `ColorPickerView`.
-attachBrightnessSlider | void | linking an `BrightnessSlideBar` on the `ColorPickerView`.
+attachAlphaSlider | void | links an `AlphaSlideBar` to the `ColorPickerView`.
+attachBrightnessSlider | void | links a `BrightnessSlideBar` to the `ColorPickerView`.
 
 ## Other Libraries
 Here are other ColorPicker related libraries!
