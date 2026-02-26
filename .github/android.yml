@@ -20,11 +20,13 @@ jobs:
       - name: Grant Execute Permission
         run: chmod +x gradlew
 
-      - name: Build with Gradle
-        run: ./gradlew assembleDebug
+      - name: Build All Variants
+        # 强制运行 assemble 任务，确保所有可能的 APK 都会生成
+        run: ./gradlew assemble
 
-      - name: Upload APK
+      - name: Upload All APKs
         uses: actions/upload-artifact@v4
         with:
-          name: ColorPicker-App
-          path: app/build/outputs/apk/debug/*.apk
+          name: ColorPicker-All-APKs
+          # 暴力搜索：查找项目中任何角落产生的 .apk 文件
+          path: "**/*.apk"
