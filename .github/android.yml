@@ -1,4 +1,4 @@
-name: Build Android APK
+name: Build ColorPicker Demo
 
 on:
   workflow_dispatch:
@@ -17,16 +17,16 @@ jobs:
           distribution: 'temurin'
           cache: gradle
 
-      - name: Grant Execute Permission
+      - name: Grant Permission
         run: chmod +x gradlew
 
-      - name: Build All Variants
-        # 强制运行 assemble 任务，确保所有可能的 APK 都会生成
-        run: ./gradlew assemble
+      - name: Build Sample App
+        # 关键修改：直接运行 app 模块的编译命令
+        run: ./gradlew :app:assembleDebug
 
-      - name: Upload All APKs
+      - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: ColorPicker-All-APKs
-          # 暴力搜索：查找项目中任何角落产生的 .apk 文件
-          path: "**/*.apk"
+          name: ColorPicker-Sample-App
+          # 明确指向演示 App 的生成路径
+          path: app/build/outputs/apk/debug/*.apk
