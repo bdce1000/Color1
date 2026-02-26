@@ -1,0 +1,33 @@
+name: Build APK
+
+on:
+  push:
+    branches:
+      - main         # 当推送到 main 时触发构建
+  workflow_dispatch:  # 也可以手动触发
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: 17
+
+      - name: Grant Gradle execute permission
+        run: chmod +x ./gradlew
+
+      - name: Build Debug APK
+        run: ./gradlew assembleDebug
+
+      - name: Upload APK artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: ColorPickerView-debug-apk
+          path: app/build/outputs/apk/debug/app-debug.apk
